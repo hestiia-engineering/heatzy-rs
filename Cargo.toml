@@ -1,0 +1,30 @@
+[package]
+name = "heatzy"
+version = "0.1.0"
+edition = "2021"
+authors = ["Hestiia@2025"]
+description = "Rust client for Heatzy REST API"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/hestiia-engineering/heatzy-rs"
+readme = "README.md"
+keywords = ["heatzy", "api", "client", "iot", "heating"]
+categories = ["api-bindings", "command-line-utilities"]
+
+[dependencies]
+reqwest = { version = "0.11", default-features = false, features = ["rustls-tls", "json"] }
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+thiserror = "1.0"
+flexi_logger = "0.28"
+log = "0.4"
+clap = { version = "4.5", features = ["derive"] }
+anyhow = "1.0"
+
+[[bin]]
+name = "heatzy"
+path = "src/bin/heatzy.rs"
+
+[lib]
+name = "heatzy"
+path = "src/lib.rs"
