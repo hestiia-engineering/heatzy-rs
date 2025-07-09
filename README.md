@@ -86,10 +86,10 @@ heatzy --token $TOKEN devices
 Get device information:
 ```bash
 # By name
-heatzy --token $TOKEN device --device-name "Bedroom"
+heatzy --token $TOKEN device --name "Bedroom"
 
 # By ID
-heatzy --token $TOKEN device --device-id "iYgWgYcmCLh6q06aTur7ha"
+heatzy --token $TOKEN device --id "iYgWgYcmCLh6q06aTur7ha"
 ```
 
 #### Mode Control
@@ -97,19 +97,19 @@ heatzy --token $TOKEN device --device-id "iYgWgYcmCLh6q06aTur7ha"
 Get current mode:
 ```bash
 # By name
-heatzy --token $TOKEN get-mode --device-name "Bedroom"
+heatzy --token $TOKEN get-mode --name "Bedroom"
 
 # By ID
-heatzy --token $TOKEN get-mode --device-id "iYgWgYcmCLh6q06aTur7ha"
+heatzy --token $TOKEN get-mode --id "iYgWgYcmCLh6q06aTur7ha"
 ```
 
 Set mode:
 ```bash
 # By name
-heatzy --token $TOKEN set-mode --device-name "Bedroom" eco
+heatzy --token $TOKEN set-mode --name "Bedroom" eco
 
 # By ID
-heatzy --token $TOKEN set-mode --device-id "iYgWgYcmCLh6q06aTur7ha" comfort
+heatzy --token $TOKEN set-mode --id "iYgWgYcmCLh6q06aTur7ha" comfort
 ```
 
 Available modes:

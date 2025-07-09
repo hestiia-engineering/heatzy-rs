@@ -21,9 +21,10 @@ pub struct AuthResponse {
 #[derive(Debug, Clone, Deserialize)]
 pub struct Device {
     pub did: String,
-    pub dev_alias: String,
+    pub dev_alias: Option<String>,
     pub product_name: String,
     pub mac: String,
+    pub is_online: bool,
 }
 
 /// Internal structure for parsing device list response

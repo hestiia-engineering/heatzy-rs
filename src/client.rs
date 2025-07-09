@@ -97,7 +97,11 @@ impl Client {
         info!("Found {} devices", devices_response.devices.len());
         
         for device in &devices_response.devices {
-            debug!("Device: {} ({})", device.dev_alias, device.did);
+            debug!("Device: {} ({}) - Online: {}", 
+                device.dev_alias.as_deref().unwrap_or("(no name)"), 
+                device.did, 
+                device.is_online
+            );
         }
         
         Ok(devices_response.devices)
@@ -110,7 +114,7 @@ impl Client {
         
         devices
             .into_iter()
-            .find(|d| d.dev_alias == name)
+            .find(|d| d.dev_alias.as_deref() == Some(name))
             .ok_or_else(|| HeatzyError::NotFound(format!("Device with name '{}' not found", name)))
     }
     

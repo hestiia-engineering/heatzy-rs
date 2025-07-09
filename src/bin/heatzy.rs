@@ -38,33 +38,33 @@ enum Commands {
     /// Get device information
     Device {
         /// Device name
-        #[arg(long, group = "device")]
+        #[arg(long = "name", group = "device")]
         device_name: Option<String>,
         
         /// Device ID
-        #[arg(long, group = "device")]
+        #[arg(long = "id", group = "device")]
         device_id: Option<String>,
     },
     
     /// Get current device mode
     GetMode {
         /// Device name
-        #[arg(long, group = "device")]
+        #[arg(long = "name", group = "device")]
         device_name: Option<String>,
         
         /// Device ID
-        #[arg(long, group = "device")]
+        #[arg(long = "id", group = "device")]
         device_id: Option<String>,
     },
     
     /// Set device mode
     SetMode {
         /// Device name
-        #[arg(long, group = "device")]
+        #[arg(long = "name", group = "device")]
         device_name: Option<String>,
         
         /// Device ID
-        #[arg(long, group = "device")]
+        #[arg(long = "id", group = "device")]
         device_id: Option<String>,
         
         /// Mode (comfort, eco, frost-protection, stop, comfort-1, comfort-2)
@@ -116,7 +116,12 @@ async fn main() -> Result<()> {
                     let devices = client.list_devices().await.context("Failed to list devices")?;
                     
                     for device in devices {
-                        println!("{:<30} {} ({})", device.dev_alias, device.did, device.product_name);
+                        println!("{:<30} {} {} ({})", 
+                            device.dev_alias.as_deref().unwrap_or("(no name)"), 
+                            device.did, 
+                            if device.is_online { "✓" } else { "✗" },
+                            device.product_name
+                        );
                     }
                 }
                 
@@ -131,15 +136,19 @@ async fn main() -> Result<()> {
                                 .context("Failed to get device by ID")?
                         }
                         _ => {
-                            error!("Must specify either --device-name or --device-id");
+                            error!("Must specify either --name or --id");
                             std::process::exit(1);
                         }
                     };
                     
-                    println!("Name:    {}", device.dev_alias);
+                    // Device name is not returned by this endpoint
+                    if let Some(alias) = &device.dev_alias {
+                        println!("Name:    {}", alias);
+                    }
                     println!("ID:      {}", device.did);
                     println!("Product: {}", device.product_name);
                     println!("MAC:     {}", device.mac);
+                    println!("Online:  {}", if device.is_online { "Yes" } else { "No" });
                 }
                 
                 Commands::GetMode { device_name, device_id } => {
